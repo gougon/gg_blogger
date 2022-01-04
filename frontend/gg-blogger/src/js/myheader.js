@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, Dropdown, Button } from 'rsuite';
+import { Navbar, Nav, Dropdown } from 'rsuite';
 import Admin from '@rsuite/icons/Admin';
 import 'rsuite/dist/rsuite.min.css';
 
@@ -28,7 +28,7 @@ const navbar = (
     </Navbar>
 )
 
-class Header extends Component {
+class Myheader extends Component {
   render() {
     return(
       <div>
@@ -38,4 +38,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Myheader;
