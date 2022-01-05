@@ -3,23 +3,16 @@ from flask import g
 from flask_restful import Api
 from flask_cors import CORS
 
-from src.database import Database
+import utils.db_util as db_util
 import config.constant as const
 import config.config as cfg
+from resources.post_list_resource import PostListResource
 
 
 app = Flask(__name__)
 app.config.from_object(cfg)
 api = Api(app)
 CORS(app, origin='*')
-
-
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = Database(const.DB_PATH)
-        db.open()
-    return db
 
 
 @app.teardown_appcontext
@@ -31,14 +24,12 @@ def close_connection(exception):
 
 def init_db():
     with app.app_context():
-        db = get_db()
-        with app.open_resource(const.SCHEMA_PATH, mode='r') as f:
-            db.init_db(f)
+        db = db_util.get_db()
+        with open(const.SCHEMA_PATH, mode='r', encoding='utf-8') as f:
+            db.execute_sql_file(f)
 
 
-@app.cli.command()
-def initdb():
-    init_db()
+api.add_resource(PostListResource, '/post', endpoint='posts')
 
 
 if __name__ == '__main__':

@@ -12,11 +12,12 @@ CREATE TABLE IF NOT EXISTS  directory(
 );
 
 CREATE TABLE IF NOT EXISTS  post(
-    pid     INTEGER     PRIMARY KEY AUTOINCREMENT,
-    title   TEXT        NOT NULL,
-    content TEXT,
-    did     INTEGER,
-    account VARCHAR(20) NOT NULL,
+    pid         INTEGER     PRIMARY KEY AUTOINCREMENT,
+    title       TEXT        NOT NULL,
+    content     TEXT,
+    word_count  INTEGER NOT NULL,
+    did         INTEGER,
+    account     VARCHAR(20) NOT NULL,
     FOREIGN KEY (did)       REFERENCES  directory(did),
     FOREIGN KEY (account)   REFERENCES  user(account)
 );

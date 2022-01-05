@@ -16,7 +16,22 @@ class Database():
         self.__check_conn()
         self.__conn.close()
 
-    def init_db(self, f):
+    def execute_sql_file(self, f):
+        self.__check_conn()
+        cursor = self.__conn.cursor()
+        cursor.executescript(f.read())
+        print(cursor.fetchall())
+        self.__conn.commit()
+
+    def execute_sql_cmd(self, cmd):
+        self.__check_conn()
+        cursor = self.__conn.cursor()
+        cursor.execute(cmd)
+        rows = cursor.fetchall()
+        self.__conn.commit()
+        return rows
+
+    def drop_table(self, f):
         self.__check_conn()
         self.__conn.cursor().executescript(f.read())
         self.__conn.commit()
